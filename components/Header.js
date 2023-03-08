@@ -2,9 +2,8 @@ import React from "react";
 import { StyleSheet, View } from "react-native";
 import { Appbar, Switch, Text, useTheme } from "react-native-paper";
 
-export default function Header() {
+export default function Header({city}) {
     const [isSwitchOn, setIsSwitchOn] = React.useState(false);
-    const theme = useTheme();
 
     return (
         <Appbar.Header style={{
@@ -12,7 +11,7 @@ export default function Header() {
             flexDirection: "row",
             justifyContent: "space-around"
         }}>
-            <Text style={styles.textStyle}>Gliwice</Text>
+            <Text style={styles.textStyle}>{city}</Text>
             <View style={{
                 display: "flex",
                 flexDirection:"row",
