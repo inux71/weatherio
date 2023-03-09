@@ -1,7 +1,8 @@
 import { useState } from 'react';
-import { Button, Searchbar } from 'react-native-paper';
+import { Searchbar } from 'react-native-paper';
 import Header from './components/Header';
 import Hints from './components/Hints';
+import WeatherInfo from './components/WeatherInfo';
 
 export default function App() {
   const mockCities = [
@@ -39,6 +40,12 @@ export default function App() {
         setCityCallback={(city) => setCity(city)} 
         setPickedCitiesCallback={(picked) => setPickedCities(picked)} 
         setSearchedCityCallback={(searched) => setSearchedCity(searched)} />
+      
+      <WeatherInfo temperature={27} 
+        description='clear sky'
+        sunrise='5:46'
+        sunset='21:01'
+        pressure={1021} />
     </>
   );
 }

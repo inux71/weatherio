@@ -1,6 +1,6 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import { Appbar, Switch, Text, useTheme } from "react-native-paper";
+import { Appbar, Switch, Text } from "react-native-paper";
 
 export default function Header({city}) {
     const [isSwitchOn, setIsSwitchOn] = React.useState(false);
