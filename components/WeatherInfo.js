@@ -9,9 +9,6 @@ export default function WeatherInfo({temperature, description, sunrise, sunset, 
     const date = new Date();
     const hour = getCorrectFormat(date.getHours());
     const minute = getCorrectFormat(date.getMinutes());
-    const day = getCorrectFormat(date.getDay());
-    const month = getCorrectFormat(date.getMonth());
-    const year = date.getFullYear();
 
     return (
         <View style={{
@@ -22,7 +19,7 @@ export default function WeatherInfo({temperature, description, sunrise, sunset, 
         }}>
             <View style={styles.horizontalView}>
                 <Text>{hour}:{minute}</Text>
-                <Text>{day}/{month}/{year}</Text>
+                <Text>{new Intl.DateTimeFormat(['ban', 'id']).format(date)}</Text>
             </View>
 
             <Text style={{
