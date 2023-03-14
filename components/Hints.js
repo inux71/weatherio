@@ -2,10 +2,8 @@ import { ScrollView, View } from "react-native";
 import { Button } from "react-native-paper";
 
 export default function Hints({
-    cities, 
-    setPickedCitiesCallback, 
-    setCityCallback, 
-    setSearchedCityCallback
+    cities,
+    onPress
 }) {
     return (
         <ScrollView style={{
@@ -15,11 +13,7 @@ export default function Hints({
         }}> 
             {cities.map((city, key) => <Button key={key}
                 type='text'
-                onPress={() => {
-                    setPickedCitiesCallback([]);
-                    setCityCallback(city);
-                    setSearchedCityCallback('');
-            }}>{city}</Button>)}
+                onPress={() => onPress(city)}>{city.name}</Button>)}
         </ScrollView>
     );
 }

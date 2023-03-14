@@ -5,21 +5,30 @@ import Hints from './components/Hints';
 import WeatherInfo from './components/WeatherInfo';
 
 export default function App() {
-  const mockCities = [
-    'Gorzyczki',
-    'Gliwice',
-    'Gorzyce',
-    'Gorzów Wielkopolski',
-    'Rydułtowy'
-  ]
+  function getCitiesFromAPI(city) {
+    return fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${city}&language=pl&count=5`)
+      .then(response => response.json())
+      .then(json => {
+        return json.results;
+      });
+  }
 
+  function getWeatherInfo(city) {
+    return fetch(`https://api.open-meteo.com/v1/forecast?latitude=${city.latitude}&longitude=${city.longitude}&current_weather=true&hourly=surface_pressure&daily=weathercode,sunrise,sunset&forecast_days=1&timezone=${city.timezone}`)
+      .then(response => response.json())
+      .then(json => {
+        return json;
+      });
+  }
+  
   const [searchedCity, setSearchedCity] = useState('');
-  const [city, setCity] = useState(mockCities[0]);
+  const [city, setCity] = useState('');
   const [pickedCities, setPickedCities] = useState([]);
+  const [info, setInfo] = useState(null)
 
   return (
     <>
-      <Header city={city} />
+      <Header city={city.name} />
 
       <Searchbar placeholder='miejscowość'
         value={searchedCity} 
@@ -27,25 +36,24 @@ export default function App() {
           backgroundColor: 'transparent'
         }} 
         onChangeText={(text) => setSearchedCity(text)} 
-        onSubmitEditing={() => {
+        onSubmitEditing={async () => {
           if (searchedCity === '') {
             return;
           }
 
-          setPickedCities(mockCities.filter(c => c.toLowerCase().startsWith(searchedCity.toLowerCase())));
+          setPickedCities(await getCitiesFromAPI(searchedCity));
         }} 
         onClearIconPress={() => setPickedCities([])} />
         
-      <Hints cities={pickedCities} 
-        setCityCallback={(city) => setCity(city)} 
-        setPickedCitiesCallback={(picked) => setPickedCities(picked)} 
-        setSearchedCityCallback={(searched) => setSearchedCity(searched)} />
+      <Hints cities={pickedCities}
+        onPress={async (city) => {
+          setPickedCities([]);
+          setCity(city);
+          setSearchedCity('');
+          setInfo(await getWeatherInfo(city));
+        }} />
       
-      <WeatherInfo temperature={27} 
-        description='clear sky'
-        sunrise='5:46'
-        sunset='21:01'
-        pressure={1021} />
+      <WeatherInfo info={info} />
     </>
   );
 }
