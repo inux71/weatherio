@@ -1,31 +1,46 @@
-import { ScrollView, Text, View } from "react-native";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { Button } from "react-native-paper";
 
 export default function Hints({ cities, onPress }) {
   return (
     <ScrollView
       style={{
-        maxHeight: cities.length > 0 ? 100 : 0,
-        overflow: "hidden",
-        marginBottom: 20,
+        maxHeight: 65,
       }}
+      horizontal={true}
     >
-      {cities.map((city, key) => {
-        return (
-          <Button key={key} type="text" onPress={() => onPress(city)}>
-            <View
+      {cities.map((city, key) => (
+        <Button
+          mode="elevated"
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "flex-start",
+            alignItems: "flex-start",
+            margin: 5,
+          }}
+          key={key}
+          onPress={() => onPress(city)}
+        >
+          <View
+            style={{
+              display: "flex",
+              flexDirection: "column",
+            }}
+          >
+            <Text
               style={{
-                display: "flex",
-                flexDirection: "row",
-                justifyContent: "space-around",
+                fontSize: 18,
+                fontWeight: "bold",
+                textAlign: "left",
               }}
             >
-              <Text>{city.name}</Text>
-              <Text>{city.country_code}</Text>
-            </View>
-          </Button>
-        );
-      })}
+              {city.name}
+            </Text>
+            <Text>{city.country}</Text>
+          </View>
+        </Button>
+      ))}
     </ScrollView>
   );
 }

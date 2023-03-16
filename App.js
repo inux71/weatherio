@@ -7,7 +7,7 @@ import WeatherInfo from "./components/WeatherInfo";
 export default function App() {
   function getCitiesFromAPI(city) {
     return fetch(
-      `https://geocoding-api.open-meteo.com/v1/search?name=${city}&language=pl&count=5`
+      `https://geocoding-api.open-meteo.com/v1/search?name=${city}&language=pl&count=10`
     )
       .then((response) => response.json())
       .then((json) => {
@@ -54,7 +54,6 @@ export default function App() {
       <Hints
         cities={pickedCities}
         onPress={async (city) => {
-          setPickedCities([]);
           setCity(city);
           setSearchedCity("");
           setInfo(await getWeatherInfo(city));

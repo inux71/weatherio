@@ -23,47 +23,56 @@ export default function WeatherInfo({ info }) {
   const minute = getCorrectFormat(date.getMinutes());
 
   const descriptions = {
-    0: { description: "Clear sky", icon: "weather-sunny" },
-    1: { description: "Mainly clear", icon: "weather-sunny" },
-    2: { description: "Partly cloudy", icon: "weather-partly-cloudy" },
-    3: { description: "Overcast", icon: "weather-cloudy" },
-    45: { description: "Fog", icon: "weather-fog" },
-    48: { description: "Depositing rime fog", icon: "weather-fog" },
-    51: { description: "Drizzle: Light", icon: "weather-rainy" },
-    53: { description: "Drizzle: Moderate", icon: "weather-rainy" },
-    55: { description: "Drizzle: Dense intensity", icon: "weather-rainy" },
-    56: { description: "Freezing Drizzle: Light", icon: "weather-rainy" },
+    0: { description: "Bezchmurnie", icon: "weather-sunny" },
+    1: { description: "Przeważnie bezchmurnie", icon: "weather-sunny" },
+    2: { description: "Częściowe zachmurzenie", icon: "weather-partly-cloudy" },
+    3: { description: "Pochmurno", icon: "weather-cloudy" },
+    45: { description: "Mgła", icon: "weather-fog" },
+    48: { description: "Osadzanie się mgły szronowej", icon: "weather-fog" },
+    51: { description: "Mżawka: Lekka", icon: "weather-rainy" },
+    53: { description: "Mżawka: Umiarkowana", icon: "weather-rainy" },
+    55: { description: "Mżawka: Gęsta", icon: "weather-rainy" },
+    56: { description: "Marznąca mżawka: Lekka", icon: "weather-rainy" },
     57: {
-      description: "Freezing Drizzle: Dense intensity",
+      description: "Marznąca mżawka: Gęsta",
       icon: "weather-rainy",
     },
-    61: { description: "Rain: Slight", icon: "weather-rainy" },
-    63: { description: "Rain: Moderate", icon: "weather-rainy" },
-    65: { description: "Rain: Heavy intensity", icon: "weather-rainy" },
-    66: { description: "Freezing Rain: Light", icon: "weather-rainy" },
+    61: { description: "Deszcz: Lekki", icon: "weather-rainy" },
+    63: { description: "Deszcz: Umiarkowany", icon: "weather-rainy" },
+    65: { description: "Deszcz: Gwałtowny", icon: "weather-rainy" },
+    66: { description: "Marznący deszcz: Lekki", icon: "weather-rainy" },
     67: {
-      description: "Freezing Rain: Heavy intensity",
+      description: "Marznący deszcz: Gwałtowny",
       icon: "weather-rainy",
     },
-    71: { description: "Snow fall: Slight", icon: "weather-snowy" },
-    73: { description: "Snow fall: Moderate", icon: "weather-snowy" },
+    71: { description: "Opady śniegu: Lekkie", icon: "weather-snowy" },
+    73: { description: "Opady śniegu: Umiarkowane", icon: "weather-snowy" },
     75: {
-      description: "Snow fall: Heavy intensity",
+      description: "Opady śniegu: Gwałtowne",
       icon: "weather-snowy-heavy",
     },
-    77: { description: "Snow grains", icon: "weather-hail" },
-    80: { description: "Rain showers: Slight", icon: "weather-rainy" },
-    81: { description: "Rain showers: Moderate", icon: "weather-pouring" },
-    82: { description: "Rain showers: Violent", icon: "weather-pouring" },
-    85: { description: "Snow showers slight", icon: "weather-snowy" },
-    86: { description: "Snow showers Heavy", icon: "weather-snowy-heavy" },
+    77: { description: "Grad", icon: "weather-hail" },
+    80: {
+      description: "Przelotne opady deszczu: niewielkie",
+      icon: "weather-rainy",
+    },
+    81: {
+      description: "Przelotne opady deszczu: Umiarkowane",
+      icon: "weather-pouring",
+    },
+    82: {
+      description: "Przelotne opady deszczu: Gwałtowne",
+      icon: "weather-pouring",
+    },
+    85: { description: "Przelotne opady śniegu", icon: "weather-snowy" },
+    86: { description: "Przelotne opady śniegu", icon: "weather-snowy-heavy" },
     95: {
-      description: "Thunderstorm: Slight or moderate",
+      description: "Burza: Słaba lub umiarkowana",
       icon: "weather-lightning",
     },
-    96: { description: "Thunderstorm with slight", icon: "weather-lightning" },
+    96: { description: "Burza z piorunami", icon: "weather-lightning" },
     99: {
-      description: "Thunderstorm with Heavy hail",
+      description: "Burza z ciężkim gradem",
       icon: "weather-lightning",
     },
   };
@@ -91,7 +100,7 @@ export default function WeatherInfo({ info }) {
       </View>
 
       <Icon
-        name={descriptions[info?.daily?.weathercode].icon ?? ""}
+        name={descriptions[info?.current_weather?.weathercode].icon ?? ""}
         size={64}
       />
 
@@ -103,7 +112,9 @@ export default function WeatherInfo({ info }) {
         {info?.current_weather?.temperature ?? ""}&deg;C
       </Text>
 
-      <Text>{descriptions[info?.daily?.weathercode].description ?? ""}</Text>
+      <Text>
+        {descriptions[info?.current_weather?.weathercode].description ?? ""}
+      </Text>
 
       <View style={styles.horizontalView}>
         <WeatherDetail
