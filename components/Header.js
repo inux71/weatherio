@@ -1,11 +1,13 @@
-import React from "react";
-import { StyleSheet, View } from "react-native";
+import React, { useState } from "react";
+import { View } from "react-native";
 import { Appbar, Switch, Text } from "react-native-paper";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 
-export default function Header({ city }) {
-  const [isSwitchOn, setIsSwitchOn] = React.useState(false);
-
+export default function Header({
+  city,
+  contrastMode,
+  setIsContrastModeEnabledCallback,
+}) {
   return (
     <Appbar.Header
       style={{
@@ -13,8 +15,18 @@ export default function Header({ city }) {
         flexDirection: "row",
         justifyContent: "space-around",
       }}
+      elevated={true}
     >
-      <Text style={styles.textStyle}>{city}</Text>
+      <Text
+        style={{
+          fontSize: 20,
+          maxWidth: "50%",
+          overflow: "hidden",
+        }}
+        numberOfLines={1}
+      >
+        {city}
+      </Text>
       <View
         style={{
           display: "flex",
@@ -25,17 +37,13 @@ export default function Header({ city }) {
       >
         <Icon name="brightness-5" size={20} />
         <Switch
-          value={isSwitchOn}
-          onValueChange={() => setIsSwitchOn(!isSwitchOn)}
+          value={contrastMode}
+          onValueChange={() => {
+            setIsContrastModeEnabledCallback(contrastMode);
+          }}
         />
         <Icon name="brightness-7" size={20} />
       </View>
     </Appbar.Header>
   );
 }
-
-const styles = StyleSheet.create({
-  textStyle: {
-    fontSize: 20,
-  },
-});

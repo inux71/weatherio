@@ -25,6 +25,7 @@ export default function App() {
       });
   }
 
+  const [isContrastModeEnabled, setIsContrastModeEnabled] = useState(false);
   const [searchedCity, setSearchedCity] = useState("");
   const [city, setCity] = useState("");
   const [pickedCities, setPickedCities] = useState([]);
@@ -32,7 +33,13 @@ export default function App() {
 
   return (
     <>
-      <Header city={city.name} />
+      <Header
+        city={city.name}
+        contrastMode={isContrastModeEnabled}
+        setIsContrastModeEnabledCallback={() =>
+          setIsContrastModeEnabled(!isContrastModeEnabled)
+        }
+      />
 
       <Searchbar
         placeholder="miejscowość"
