@@ -1,4 +1,4 @@
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { Platform, ScrollView, StyleSheet, Text, View } from "react-native";
 import { Button, useTheme } from "react-native-paper";
 
 export default function Hints({ cities, onPress, isContrastModeEnabled }) {
@@ -17,7 +17,7 @@ export default function Hints({ cities, onPress, isContrastModeEnabled }) {
           style={{
             display: "flex",
             flexDirection: "column",
-            justifyContent: "flex-start",
+            justifyContent: "center",
             alignItems: "flex-start",
             margin: 5,
             backgroundColor: isContrastModeEnabled
@@ -27,23 +27,38 @@ export default function Hints({ cities, onPress, isContrastModeEnabled }) {
           key={key}
           onPress={() => onPress(city)}
         >
-          <View
-            style={{
-              display: "flex",
-              flexDirection: "column",
-            }}
-          >
+          {Platform.OS === "ios" ? (
+            <View
+              style={{
+                display: "flex",
+                flexDirection: "column",
+              }}
+            >
+              <Text
+                style={{
+                  fontSize: 18,
+                  fontWeight: "bold",
+                  textAlign: "left",
+                }}
+              >
+                {city.name}
+              </Text>
+              <Text>{city.country}</Text>
+            </View>
+          ) : (
             <Text
               style={{
                 fontSize: 18,
                 fontWeight: "bold",
                 textAlign: "left",
+                color: isContrastModeEnabled
+                  ? theme.colors.onTertiaryContainer
+                  : theme.colors.onSurface,
               }}
             >
               {city.name}
             </Text>
-            <Text>{city.country}</Text>
-          </View>
+          )}
         </Button>
       ))}
     </ScrollView>
