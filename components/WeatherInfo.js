@@ -1,9 +1,9 @@
 import { StyleSheet, View } from "react-native";
-import { Text } from "react-native-paper";
+import { Text, useTheme } from "react-native-paper";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import WeatherDetail from "./WeatherDetail";
 
-export default function WeatherInfo({ info }) {
+export default function WeatherInfo({ info, isContrastModeEnabled }) {
   function getCorrectFormat(d) {
     return d < 10 ? "0" + d : d;
   }
@@ -77,6 +77,8 @@ export default function WeatherInfo({ info }) {
     },
   };
 
+  const theme = useTheme();
+
   return info == null ? (
     <></>
   ) : (
@@ -90,44 +92,138 @@ export default function WeatherInfo({ info }) {
     >
       <View style={styles.horizontalView}>
         <WeatherDetail
-          icon={<Icon name="clock-outline" size={32} />}
-          detail={`${hour}:${minute}`}
+          icon={
+            <Icon
+              name="clock-outline"
+              size={32}
+              style={{
+                color: isContrastModeEnabled
+                  ? theme.colors.tertiaryContainer
+                  : theme.colors.onSurface,
+              }}
+            />
+          }
+          detail={
+            isContrastModeEnabled
+              ? `Czas: ${hour}:${minute}`
+              : `${hour}:${minute}`
+          }
+          isContrasModeEnabled={isContrastModeEnabled}
         />
         <WeatherDetail
-          icon={<Icon name="calendar" size={32} />}
-          detail={new Intl.DateTimeFormat(["ban", "id"]).format(date)}
+          icon={
+            <Icon
+              name="calendar"
+              size={32}
+              style={{
+                color: isContrastModeEnabled
+                  ? theme.colors.tertiaryContainer
+                  : theme.colors.onSurface,
+              }}
+            />
+          }
+          detail={
+            isContrastModeEnabled
+              ? `Data: ${new Intl.DateTimeFormat(["ban", "id"]).format(date)}`
+              : new Intl.DateTimeFormat(["ban", "id"]).format(date)
+          }
+          isContrasModeEnabled={isContrastModeEnabled}
         />
       </View>
 
       <Icon
         name={descriptions[info?.current_weather?.weathercode].icon ?? ""}
         size={64}
+        style={{
+          color: isContrastModeEnabled
+            ? theme.colors.tertiaryContainer
+            : theme.colors.onSurface,
+        }}
       />
 
       <Text
         style={{
           fontSize: 42,
+          color: isContrastModeEnabled
+            ? theme.colors.tertiaryContainer
+            : theme.colors.onSurface,
+          fontWeight: isContrastModeEnabled ? "bold" : "normal",
         }}
       >
         {info?.current_weather?.temperature ?? ""}&deg;C
       </Text>
 
-      <Text>
+      <Text
+        style={{
+          color: isContrastModeEnabled
+            ? theme.colors.tertiaryContainer
+            : theme.colors.onSurface,
+          fontWeight: isContrastModeEnabled ? "bold" : "normal",
+          fontSize: isContrastModeEnabled ? 28 : 14,
+        }}
+      >
         {descriptions[info?.current_weather?.weathercode].description ?? ""}
       </Text>
 
       <View style={styles.horizontalView}>
         <WeatherDetail
-          icon={<Icon name="weather-sunset-up" size={32} />}
-          detail={getTimeFromISO(info?.daily?.sunrise[0] ?? "")}
+          icon={
+            <Icon
+              name="weather-sunset-up"
+              size={32}
+              style={{
+                color: isContrastModeEnabled
+                  ? theme.colors.tertiaryContainer
+                  : theme.colors.onSurface,
+              }}
+            />
+          }
+          detail={
+            isContrastModeEnabled
+              ? `Wschód: ${getTimeFromISO(info?.daily?.sunrise[0] ?? "")}`
+              : getTimeFromISO(info?.daily?.sunrise[0] ?? "")
+          }
+          isContrasModeEnabled={isContrastModeEnabled}
         />
         <WeatherDetail
-          icon={<Icon name="car-brake-low-pressure" size={32} />}
-          detail={`${info?.hourly?.surface_pressure[hour - 1] ?? ""} hPa`}
+          icon={
+            <Icon
+              name="car-brake-low-pressure"
+              size={32}
+              style={{
+                color: isContrastModeEnabled
+                  ? theme.colors.tertiaryContainer
+                  : theme.colors.onSurface,
+              }}
+            />
+          }
+          detail={
+            isContrastModeEnabled
+              ? `Ciśnienie: ${
+                  info?.hourly?.surface_pressure[hour - 1] ?? ""
+                } hPa`
+              : `${info?.hourly?.surface_pressure[hour - 1] ?? ""} hPa`
+          }
+          isContrasModeEnabled={isContrastModeEnabled}
         />
         <WeatherDetail
-          icon={<Icon name="weather-sunset-down" size={32} />}
-          detail={getTimeFromISO(info?.daily?.sunset[0] ?? "")}
+          icon={
+            <Icon
+              name="weather-sunset-down"
+              size={32}
+              style={{
+                color: isContrastModeEnabled
+                  ? theme.colors.tertiaryContainer
+                  : theme.colors.onSurface,
+              }}
+            />
+          }
+          detail={
+            isContrastModeEnabled
+              ? `Zachód: ${getTimeFromISO(info?.daily?.sunset[0] ?? "")}`
+              : getTimeFromISO(info?.daily?.sunset[0] ?? "")
+          }
+          isContrasModeEnabled={isContrastModeEnabled}
         />
       </View>
     </View>
@@ -140,6 +236,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignSelf: "stretch",
-    padding: 20,
+    padding: 10,
   },
 });

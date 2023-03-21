@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Searchbar } from "react-native-paper";
+import { View } from "react-native";
+import { Searchbar, useTheme } from "react-native-paper";
 import Header from "./components/Header";
 import Hints from "./components/Hints";
 import WeatherInfo from "./components/WeatherInfo";
@@ -31,8 +32,19 @@ export default function App() {
   const [pickedCities, setPickedCities] = useState([]);
   const [info, setInfo] = useState(null);
 
+  const theme = useTheme();
+
   return (
-    <>
+    <View
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        flex: 1,
+        backgroundColor: isContrastModeEnabled
+          ? theme.colors.onTertiaryContainer
+          : theme.colors.onPrimary,
+      }}
+    >
       <Header
         city={city.name}
         contrastMode={isContrastModeEnabled}
@@ -42,10 +54,28 @@ export default function App() {
       />
 
       <Searchbar
+        placeholderTextColor={
+          isContrastModeEnabled
+            ? theme.colors.tertiaryContainer
+            : theme.colors.onSurface
+        }
+        inputStyle={{
+          color: isContrastModeEnabled
+            ? theme.colors.tertiaryContainer
+            : theme.colors.onSurface,
+        }}
+        iconColor={
+          isContrastModeEnabled
+            ? theme.colors.tertiaryContainer
+            : theme.colors.onSurface
+        }
         placeholder="miejscowość"
         value={searchedCity}
         style={{
           backgroundColor: "transparent",
+          borderWidth: isContrastModeEnabled ? 2 : 0,
+          borderColor: theme.colors.tertiaryContainer,
+          marginVertical: 5,
         }}
         onChangeText={(text) => setSearchedCity(text)}
         onSubmitEditing={async () => {
@@ -55,10 +85,10 @@ export default function App() {
 
           setPickedCities(await getCitiesFromAPI(searchedCity));
         }}
-        onClearIconPress={() => setPickedCities([])}
       />
 
       <Hints
+        isContrastModeEnabled={isContrastModeEnabled}
         cities={pickedCities}
         onPress={async (city) => {
           setCity(city);
@@ -67,7 +97,7 @@ export default function App() {
         }}
       />
 
-      <WeatherInfo info={info} />
-    </>
+      <WeatherInfo info={info} isContrastModeEnabled={isContrastModeEnabled} />
+    </View>
   );
 }

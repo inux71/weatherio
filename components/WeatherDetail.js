@@ -1,6 +1,9 @@
 import { Text, View } from "react-native";
+import { useTheme } from "react-native-paper";
 
-export default function WeatherDetail({ icon, detail }) {
+export default function WeatherDetail({ icon, detail, isContrasModeEnabled }) {
+  const theme = useTheme();
+
   return (
     <View
       style={{
@@ -10,7 +13,16 @@ export default function WeatherDetail({ icon, detail }) {
       }}
     >
       {icon}
-      <Text>{detail}</Text>
+      <Text
+        style={{
+          color: isContrasModeEnabled
+            ? theme.colors.tertiaryContainer
+            : theme.colors.onSurface,
+          fontWeight: isContrasModeEnabled ? "bold" : "normal",
+        }}
+      >
+        {detail}
+      </Text>
     </View>
   );
 }

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { View } from "react-native";
-import { Appbar, Switch, Text } from "react-native-paper";
+import { Appbar, Switch, Text, useTheme } from "react-native-paper";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 
 export default function Header({
@@ -8,12 +8,15 @@ export default function Header({
   contrastMode,
   setIsContrastModeEnabledCallback,
 }) {
+  const theme = useTheme();
+
   return (
     <Appbar.Header
       style={{
         display: "flex",
         flexDirection: "row",
         justifyContent: "space-around",
+        backgroundColor: contrastMode ? theme.colors.tertiaryContainer : "",
       }}
       elevated={true}
     >
@@ -22,6 +25,7 @@ export default function Header({
           fontSize: 20,
           maxWidth: "50%",
           overflow: "hidden",
+          fontWeight: contrastMode ? "bold" : "normal",
         }}
         numberOfLines={1}
       >
@@ -41,6 +45,11 @@ export default function Header({
           onValueChange={() => {
             setIsContrastModeEnabledCallback(contrastMode);
           }}
+          color={
+            contrastMode
+              ? theme.colors.onTertiaryContainer
+              : theme.colors.onPrimaryContainer
+          }
         />
         <Icon name="brightness-7" size={20} />
       </View>

@@ -1,7 +1,9 @@
 import { ScrollView, StyleSheet, Text, View } from "react-native";
-import { Button } from "react-native-paper";
+import { Button, useTheme } from "react-native-paper";
 
-export default function Hints({ cities, onPress }) {
+export default function Hints({ cities, onPress, isContrastModeEnabled }) {
+  const theme = useTheme();
+
   return (
     <ScrollView
       style={{
@@ -18,6 +20,9 @@ export default function Hints({ cities, onPress }) {
             justifyContent: "flex-start",
             alignItems: "flex-start",
             margin: 5,
+            backgroundColor: isContrastModeEnabled
+              ? theme.colors.tertiaryContainer
+              : theme.colors.surface,
           }}
           key={key}
           onPress={() => onPress(city)}
