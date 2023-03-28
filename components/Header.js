@@ -20,7 +20,7 @@ export default function Header({
       }}
       elevated={true}
     >
-      <Text
+      <Text // display current city name
         style={{
           fontSize: 20,
           maxWidth: "50%",
@@ -40,7 +40,7 @@ export default function Header({
         }}
       >
         <Icon name="brightness-5" size={20} />
-        <Switch
+        <Switch // change the view style
           value={contrastMode}
           onValueChange={() => {
             setIsContrastModeEnabledCallback(contrastMode);

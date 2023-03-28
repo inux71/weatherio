@@ -6,6 +6,7 @@ import Hints from "./components/Hints";
 import WeatherInfo from "./components/WeatherInfo";
 
 export default function App() {
+  // get 10 cities based on city name provided by the user
   function getCitiesFromAPI(city) {
     return fetch(
       `https://geocoding-api.open-meteo.com/v1/search?name=${city}&language=pl&count=10`
@@ -16,6 +17,7 @@ export default function App() {
       });
   }
 
+  // get the informations about the weather in provided city
   function getWeatherInfo(city) {
     return fetch(
       `https://api.open-meteo.com/v1/forecast?latitude=${city.latitude}&longitude=${city.longitude}&current_weather=true&hourly=surface_pressure&daily=weathercode,sunrise,sunset&forecast_days=1&timezone=${city.timezone}`
@@ -45,15 +47,14 @@ export default function App() {
           : theme.colors.onPrimary,
       }}
     >
-      <Header
+      <Header // app header
         city={city.name}
         contrastMode={isContrastModeEnabled}
         setIsContrastModeEnabledCallback={() =>
           setIsContrastModeEnabled(!isContrastModeEnabled)
         }
       />
-
-      <Searchbar
+      <Searchbar // search-input for searching the city
         placeholderTextColor={
           isContrastModeEnabled
             ? theme.colors.tertiaryContainer
@@ -87,7 +88,7 @@ export default function App() {
         }}
       />
 
-      <Hints
+      <Hints // contains cities returned from API
         isContrastModeEnabled={isContrastModeEnabled}
         cities={pickedCities}
         onPress={async (city) => {
@@ -97,7 +98,10 @@ export default function App() {
         }}
       />
 
-      <WeatherInfo info={info} isContrastModeEnabled={isContrastModeEnabled} />
+      <WeatherInfo // contains informations about the weather in given city
+        info={info}
+        isContrastModeEnabled={isContrastModeEnabled}
+      />
     </View>
   );
 }

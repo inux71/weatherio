@@ -4,6 +4,7 @@ import { Button, useTheme } from "react-native-paper";
 export default function Hints({ cities, onPress, isContrastModeEnabled }) {
   const theme = useTheme();
 
+  // display cities returned from API
   return (
     <ScrollView
       style={{

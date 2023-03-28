@@ -91,7 +91,7 @@ export default function WeatherInfo({ info, isContrastModeEnabled }) {
       }}
     >
       <View style={styles.horizontalView}>
-        <WeatherDetail
+        <WeatherDetail // time information
           icon={
             <Icon
               name="clock-outline"
@@ -110,7 +110,7 @@ export default function WeatherInfo({ info, isContrastModeEnabled }) {
           }
           isContrasModeEnabled={isContrastModeEnabled}
         />
-        <WeatherDetail
+        <WeatherDetail // date information
           icon={
             <Icon
               name="calendar"
@@ -141,7 +141,7 @@ export default function WeatherInfo({ info, isContrastModeEnabled }) {
         }}
       />
 
-      <Text
+      <Text // temperature information
         style={{
           fontSize: 42,
           color: isContrastModeEnabled
@@ -153,8 +153,9 @@ export default function WeatherInfo({ info, isContrastModeEnabled }) {
         {info?.current_weather?.temperature ?? ""}&deg;C
       </Text>
 
-      <Text
+      <Text // the weather description
         style={{
+          marginBottom: 50,
           color: isContrastModeEnabled
             ? theme.colors.tertiaryContainer
             : theme.colors.onSurface,
@@ -166,7 +167,7 @@ export default function WeatherInfo({ info, isContrastModeEnabled }) {
       </Text>
 
       <View style={styles.horizontalView}>
-        <WeatherDetail
+        <WeatherDetail // sunrise time information
           icon={
             <Icon
               name="weather-sunset-up"
@@ -185,7 +186,7 @@ export default function WeatherInfo({ info, isContrastModeEnabled }) {
           }
           isContrasModeEnabled={isContrastModeEnabled}
         />
-        <WeatherDetail
+        <WeatherDetail // pressure information
           icon={
             <Icon
               name="car-brake-low-pressure"
@@ -206,7 +207,7 @@ export default function WeatherInfo({ info, isContrastModeEnabled }) {
           }
           isContrasModeEnabled={isContrastModeEnabled}
         />
-        <WeatherDetail
+        <WeatherDetail // sunset information
           icon={
             <Icon
               name="weather-sunset-down"

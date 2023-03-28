@@ -4,6 +4,7 @@ import { useTheme } from "react-native-paper";
 export default function WeatherDetail({ icon, detail, isContrasModeEnabled }) {
   const theme = useTheme();
 
+  // custom component returning giver weather information with icon
   return (
     <View
       style={{
